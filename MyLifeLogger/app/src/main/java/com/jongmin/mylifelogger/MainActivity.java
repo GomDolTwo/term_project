@@ -3,6 +3,10 @@ package com.jongmin.mylifelogger;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +22,24 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CommonData, SensorEventListener {
 
     protected GoogleMap mGoogleMap;
 
     double currentlat, currentlon;
     LatLng currentloc;
+
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+
+    int count = 0;
+    int dir_UP = 0;
+    int dir_DOWN = 0;
+    double acceleration = 0;
+    double gravity = 9.8;
+    float x = 0f;
+    float y = 0f;
+    float z = 0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alert = builder.create();
             alert.show();
         }
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         init();
 
@@ -71,9 +90,53 @@ public class MainActivity extends AppCompatActivity {
 
         StatButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+                manbo.add(0, count);
                 startActivity(StatIntent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // 아무 동작 안함
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            x = event.values[0];
+            y = event.values[1];
+            z = event.values[2];
+            acceleration = Math.sqrt(x*x+y*y+z*z);
+        }
+
+        if (acceleration - gravity > 5) {
+            dir_UP = 1;
+        }
+
+        if (dir_UP == 1 && gravity - acceleration > 5) {
+            dir_DOWN = 1;
+        }
+
+        if (dir_DOWN == 1) {
+            count++;
+
+            dir_UP = 0;
+            dir_DOWN = 0;
+        }
     }
 
     public void init() {
