@@ -1,5 +1,7 @@
 package com.jongmin.mylifelogger;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 
 /**
