@@ -18,12 +18,12 @@ public class MokpyoOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE member (name TEXT, startDate NUMERIC, dueDate NUMERIC, mokpyo TEXT);");
+        db.execSQL("CREATE TABLE member (name TEXT, startDate NUMERIC, dueDate NUMERIC, mokpyo TEXT, type INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("CREATE TABLE member (name TEXT, startDate NUMERIC, dueDate NUMERIC, mokpyo TEXT);");
+        db.execSQL("CREATE TABLE member (name TEXT, startDate NUMERIC, dueDate NUMERIC, mokpyo TEXT, type INTEGER);");
     }
 
 }

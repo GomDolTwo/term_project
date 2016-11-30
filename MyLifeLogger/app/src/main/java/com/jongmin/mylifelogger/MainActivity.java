@@ -3,16 +3,19 @@ package com.jongmin.mylifelogger;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,11 +44,15 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
     float y = 0f;
     float z = 0f;
 
+    ImageView iv = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         startActivity(new Intent(this, SplashActivity.class));
         setContentView(R.layout.activity_main);
+
+        evtcnt.add(0,0);    // 이벤트 등록 여부
 
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
@@ -75,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
         Button TaskButton = (Button) findViewById(R.id.taskbtn);
         Button MokpyoButton = (Button) findViewById(R.id.mokpyobtn);
         Button StatButton = (Button) findViewById(R.id.statbtn);
+        Button CameraButton = (Button) findViewById(R.id.cambtn);
 
         TaskButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -94,6 +102,18 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
                 startActivity(StatIntent);
             }
         });
+
+        CameraButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 1);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        iv.setImageURI(data.getData());
     }
 
     @Override

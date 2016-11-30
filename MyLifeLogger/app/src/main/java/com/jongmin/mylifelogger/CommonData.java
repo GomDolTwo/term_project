@@ -1,7 +1,5 @@
 package com.jongmin.mylifelogger;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.ArrayList;
 
 /**
@@ -9,4 +7,5 @@ import java.util.ArrayList;
  */
 public interface CommonData {
     ArrayList<Integer> manbo = new ArrayList<Integer>();
+    ArrayList<Integer> evtcnt = new ArrayList<Integer>();
 }
