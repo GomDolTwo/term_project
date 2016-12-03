@@ -57,6 +57,11 @@
         <activity android:name=".StatActivity">
 
         </activity>
+
+        <activity android:name=".ChartActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
     </application>
 
 </manifest>

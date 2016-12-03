@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="목표 달성 여부"
-        android:id="@+id/button11"
+        android:id="@+id/goalbtn"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -64,4 +64,13 @@
         android:layout_alignBottom="@+id/textView10"
         android:layout_toRightOf="@+id/textView10"
         android:layout_toEndOf="@+id/textView10" />
+
+    <Button
+        android:text="하루 통계 그래프"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goalbtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/graphbtn" />
 </RelativeLayout>

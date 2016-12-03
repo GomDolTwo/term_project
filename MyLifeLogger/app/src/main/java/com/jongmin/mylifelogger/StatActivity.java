@@ -1,8 +1,11 @@
 package com.jongmin.mylifelogger;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.sql.Date;
@@ -44,8 +47,25 @@ public class StatActivity extends AppCompatActivity implements CommonData {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
 
+        final Intent chartIntent = new Intent(this, ChartActivity.class);
+
         manbocount = (TextView)findViewById(R.id.textView11);
 
         manbocount.setText(Integer.toString(manbo.get(0)));
+
+        Button goalButton = (Button) findViewById(R.id.goalbtn);
+        Button graphButton = (Button) findViewById(R.id.graphbtn);
+
+        goalButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+
+        graphButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(chartIntent);
+            }
+        });
     }
 }

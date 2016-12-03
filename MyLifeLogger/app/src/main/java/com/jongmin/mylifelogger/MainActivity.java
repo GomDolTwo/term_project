@@ -106,14 +106,22 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
         CameraButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                try {
+                    startActivityForResult(intent, 1);
+                } catch (NullPointerException e) {
+                    // 사진 안찍었을 때
+                }
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        iv.setImageURI(data.getData());
+        try {
+            iv.setImageURI(data.getData());
+        } catch (NullPointerException e) {
+            // 사진 안찍었을 때
+        }
     }
 
     @Override
