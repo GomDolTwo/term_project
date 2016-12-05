@@ -8,4 +8,7 @@ import java.util.ArrayList;
 public interface CommonData {
     ArrayList<Integer> manbo = new ArrayList<Integer>();
     ArrayList<Integer> evtcnt = new ArrayList<Integer>();
+
+    ArrayList<Double> latitude = new ArrayList<>();
+    ArrayList<Double> longitude = new ArrayList<>();
 }

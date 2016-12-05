@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * Created by JongMin on 2016-11-23.
@@ -21,13 +22,24 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
 
     TextView optText;
 
-    public void taskSQLexec(String name, Date date, Double latitude, Double longitude, String task, SQLiteDatabase db) {
-        db.execSQL("insert into member(name, date, latitude, longitude, task) values ("
-                + name + ", "
-                + date + ", "
+    Calendar now = Calendar.getInstance();
+
+    String name = "";
+    int year, month, day, hour, min, sec;
+    int start = 0;
+
+    public void taskSQLexec(String name, int year, int month, int day, int hour, int min, int sec, double latitude, double longitude, int start, SQLiteDatabase db) {
+        db.execSQL("insert into member(name, year, month, day, hour, min, sec, latitude, longitude, start) values ("
+                + "'" + name + "', "
+                + year + ", "
+                + month + ", "
+                + day + ", "
+                + hour + ", "
+                + min + ", "
+                + sec + ", "
                 + latitude + ", "
                 + longitude + ", "
-                + task +");"
+                + start +");"
         );
     }
 
@@ -35,6 +47,8 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+
+        taskDB = taskHelper.getWritableDatabase();
 
         optText = (TextView) findViewById(R.id.textView12);
 
@@ -50,36 +64,42 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
         studyButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 optText.setText("공부를 선택하셨습니다.");
+                name = "study";
             }
         });
 
         classButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 optText.setText("강의를 선택하셨습니다.");
+                name = "class";
             }
         });
 
         hobbyButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 optText.setText("취미를 선택하셨습니다.");
+                name = "hobby";
             }
         });
 
         friendButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 optText.setText("친목을 선택하셨습니다.");
+                name = "friend";
             }
         });
 
         gameButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 optText.setText("게임을 선택하셨습니다.");
+                name = "game";
             }
         });
 
         walkButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 optText.setText("걷기를 선택하셨습니다.");
+                name = "walk";
             }
         });
 
@@ -87,6 +107,15 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 if (evtcnt.get(0) == 0)
                 {
+                    year = now.get(Calendar.YEAR);
+                    month = now.get(Calendar.MONTH) + 1;
+                    day = now.get(Calendar.DATE);
+                    hour = now.get(Calendar.HOUR);
+                    min = now.get(Calendar.MINUTE);
+                    sec = now.get(Calendar.SECOND);
+
+                    taskSQLexec(name, year, month, day, hour, min, sec, latitude.get(0), longitude.get(0), start, taskDB);
+
                     evtcnt.add(0,1);
                     finish();
                 }
@@ -110,6 +139,8 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 if (evtcnt.get(0) == 1)
                 {
+                    // 맨 마지막 DB의 start를 시간계산해야함.
+
                     evtcnt.add(0,0);
                     finish();
                 }

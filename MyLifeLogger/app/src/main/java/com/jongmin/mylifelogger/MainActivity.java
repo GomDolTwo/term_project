@@ -86,6 +86,16 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
 
         TaskButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+                GpsInfo gps = new GpsInfo(MainActivity.this);
+
+                if (gps.isGetLocation()) {
+                    currentlat = gps.getLatitude();
+                    currentlon = gps.getLongitude();
+                }
+
+                latitude.add(0, currentlat);
+                longitude.add(0, currentlon);
+
                 startActivity(TaskIntent);
             }
         });
@@ -189,13 +199,11 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
             // Map 을 zoom
             mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(13));
 
-            /* 현재 위치 마커 설정
             MarkerOptions optFirst = new MarkerOptions();
             optFirst.position(currentloc);// 위도 • 경도
             optFirst.title("Current Position");// 제목 미리보기
             optFirst.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)); // 아이콘
             mGoogleMap.addMarker(optFirst).showInfoWindow();
-            */
         }
     }
 }

@@ -12,17 +12,17 @@ public class TaskOpenHelper extends SQLiteOpenHelper {
 
     Context context;
     public TaskOpenHelper(Context context) {
-        super(context, "task_test.sqlite", null, 1);
+        super(context, "task_test_v2.sqlite", null, 1);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE member (name TEXT, date NUMERIC, latitude DOUBLE, longitude DOUBLE, task TEXT);");
+        db.execSQL("CREATE TABLE member (name TEXT, year INTEGER, month INTEGER, day INTEGER, hour INTEGER, min INTEGER, sec INTEGER, latitude DOUBLE, longitude DOUBLE, start INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("CREATE TABLE member (name TEXT, date NUMERIC, latitude DOUBLE, longitude DOUBLE, task TEXT);");
+        db.execSQL("CREATE TABLE member (name TEXT, year INTEGER, month INTEGER, day INTEGER, hour INTEGER, min INTEGER, sec INTEGER, latitude DOUBLE, longitude DOUBLE, start INTEGER);");
     }
 }
