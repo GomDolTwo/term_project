@@ -12,7 +12,7 @@ public class TaskOpenHelper extends SQLiteOpenHelper {
 
     Context context;
     public TaskOpenHelper(Context context) {
-        super(context, "task_test_v2.sqlite", null, 1);
+        super(context, "task_test_v3.sqlite", null, 1);
         this.context = context;
     }
 

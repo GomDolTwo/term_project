@@ -26,7 +26,9 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
 
     String name = "";
     int year, month, day, hour, min, sec;
+    int sec_temp;
     int start = 0;
+    int res=0;
 
     public void taskSQLexec(String name, int year, int month, int day, int hour, int min, int sec, double latitude, double longitude, int start, SQLiteDatabase db) {
         db.execSQL("insert into member(name, year, month, day, hour, min, sec, latitude, longitude, start) values ("
@@ -65,6 +67,7 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 optText.setText("공부를 선택하셨습니다.");
                 name = "study";
+                res = 1;
             }
         });
 
@@ -72,6 +75,7 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 optText.setText("강의를 선택하셨습니다.");
                 name = "class";
+                res = 1;
             }
         });
 
@@ -79,6 +83,7 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 optText.setText("취미를 선택하셨습니다.");
                 name = "hobby";
+                res = 1;
             }
         });
 
@@ -86,6 +91,7 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 optText.setText("친목을 선택하셨습니다.");
                 name = "friend";
+                res = 1;
             }
         });
 
@@ -93,6 +99,7 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 optText.setText("게임을 선택하셨습니다.");
                 name = "game";
+                res = 1;
             }
         });
 
@@ -100,12 +107,13 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 optText.setText("걷기를 선택하셨습니다.");
                 name = "walk";
+                res = 1;
             }
         });
 
         startEvent.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                if (evtcnt.get(0) == 0)
+                if (evtcnt.get(0) == 0 && res == 1)
                 {
                     year = now.get(Calendar.YEAR);
                     month = now.get(Calendar.MONTH) + 1;
@@ -118,6 +126,19 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
 
                     evtcnt.add(0,1);
                     finish();
+                }
+                else if (res == 0)
+                {
+                    // 작업을 선택하도록 알림 팝업
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TaskActivity.this);
+                    builder.setMessage("추가 할 작업을 선택 후 시작을 눌러주세요.").setCancelable(false).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // None
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
                 }
                 else
                 {
@@ -139,7 +160,16 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
             public void onClick(View v) {
                 if (evtcnt.get(0) == 1)
                 {
-                    // 맨 마지막 DB의 start를 시간계산해야함.
+                    if(now.get(Calendar.SECOND) - sec < 0)
+                    {
+                        sec_temp = sec - now.get(Calendar.SECOND);
+                    }
+                    else
+                    {
+                        sec_temp = now.get(Calendar.SECOND) - sec;
+                    }
+
+                    taskDB.execSQL("update member set start=" + sec_temp + " where start=0");
 
                     evtcnt.add(0,0);
                     finish();

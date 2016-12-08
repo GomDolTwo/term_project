@@ -181,4 +181,58 @@
         android:layout_toRightOf="@+id/textView17"
         android:layout_toEndOf="@+id/textView17"
         android:id="@+id/textView24" />
+
+    <TextView
+        android:text="0시간 0분 0초"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView20"
+        android:layout_toRightOf="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9"
+        android:id="@+id/textView25" />
+
+    <TextView
+        android:text="0시간 0분 0초"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView21"
+        android:layout_alignLeft="@+id/textView25"
+        android:layout_alignStart="@+id/textView25"
+        android:id="@+id/textView26" />
+
+    <TextView
+        android:text="0시간 0분 0초"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView22"
+        android:layout_alignLeft="@+id/textView26"
+        android:layout_alignStart="@+id/textView26"
+        android:id="@+id/textView27" />
+
+    <TextView
+        android:text="0시간 0분 0초"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView23"
+        android:layout_alignLeft="@+id/textView27"
+        android:layout_alignStart="@+id/textView27"
+        android:id="@+id/textView28" />
+
+    <TextView
+        android:text="0시간 0분 0초"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView24"
+        android:layout_alignLeft="@+id/textView28"
+        android:layout_alignStart="@+id/textView28"
+        android:id="@+id/textView29" />
+
+    <TextView
+        android:text="0시간 0분 0초"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView24"
+        android:layout_alignLeft="@+id/textView29"
+        android:layout_alignStart="@+id/textView29"
+        android:id="@+id/textView30" />
 </RelativeLayout>

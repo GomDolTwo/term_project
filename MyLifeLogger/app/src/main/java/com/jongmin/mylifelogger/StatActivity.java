@@ -25,6 +25,7 @@ public class StatActivity extends AppCompatActivity implements CommonData {
     String a = "";
 
     TextView manbocount;
+
     TextView studyCount;
     TextView classCount;
     TextView hobbyCount;
@@ -32,7 +33,15 @@ public class StatActivity extends AppCompatActivity implements CommonData {
     TextView gameCount;
     TextView walkCount;
 
+    TextView studyTimer;
+    TextView classTimer;
+    TextView hobbyTimer;
+    TextView friendTimer;
+    TextView gameTimer;
+    TextView walkTimer;
+
     int std, cls, hby, fri, gam, wak;
+    int std_start=0, cls_start=0, hby_start=0, fri_start=0, gam_start=0, wak_start=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,13 @@ public class StatActivity extends AppCompatActivity implements CommonData {
         gameCount = (TextView)findViewById(R.id.textView23);
         walkCount = (TextView)findViewById(R.id.textView24);
 
+        studyTimer = (TextView)findViewById(R.id.textView25);
+        classTimer = (TextView)findViewById(R.id.textView26);
+        hobbyTimer = (TextView)findViewById(R.id.textView27);
+        friendTimer = (TextView)findViewById(R.id.textView28);
+        gameTimer = (TextView)findViewById(R.id.textView29);
+        walkTimer = (TextView)findViewById(R.id.textView30);
+
         manbocount.setText(Integer.toString(manbo.get(0)));
 
         rs = taskDB.rawQuery("select * from member;", null);
@@ -61,25 +77,38 @@ public class StatActivity extends AppCompatActivity implements CommonData {
             switch (a) {
                 case "study" :
                     ++std;
+                    std_start += rs.getInt(9);
                     break;
                 case "class" :
                     ++cls;
+                    cls_start += rs.getInt(9);
                     break;
                 case "hobby" :
                     ++hby;
+                    hby_start += rs.getInt(9);
                     break;
                 case "friend" :
                     ++fri;
+                    fri_start += rs.getInt(9);
                     break;
                 case "game" :
                     ++gam;
+                    gam_start += rs.getInt(9);
                     break;
                 case "walk" :
                     ++wak;
+                    wak_start += rs.getInt(9);
                     break;
                 default :
                     break;
             }
+
+            studyTimer.setText(timerCalc(std_start));
+            classTimer.setText(timerCalc(cls_start));
+            hobbyTimer.setText(timerCalc(hby_start));
+            friendTimer.setText(timerCalc(fri_start));
+            gameTimer.setText(timerCalc(gam_start));
+            walkTimer.setText(timerCalc(wak_start));
         }
 
         studyCount.setText(Integer.toString(std));
@@ -103,5 +132,31 @@ public class StatActivity extends AppCompatActivity implements CommonData {
                 startActivity(chartIntent);
             }
         });
+    }
+
+    public String timerCalc(int start) {
+        int hour, min, sec;
+
+        if (start > 60*60)
+        {
+            hour = start / (60*60);
+            start = start - hour*60*60;
+            min = start / 60;
+            sec = start - min*60;
+        }
+        else if (start > 60)
+        {
+            hour = 0;
+            min = start / 60;
+            sec = start - min*60;
+        }
+        else
+        {
+            hour = 0;
+            min = 0;
+            sec = start;
+        }
+
+        return Integer.toString(hour) + "시간 " + Integer.toString(min) + "분 " + Integer.toString(sec) + "초";
     }
 }
