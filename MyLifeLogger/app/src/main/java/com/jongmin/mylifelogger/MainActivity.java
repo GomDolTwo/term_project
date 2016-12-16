@@ -3,7 +3,6 @@ package com.jongmin.mylifelogger;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,8 +10,8 @@ import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity implements CommonData, SensorEventListener {
 
-    protected GoogleMap mGoogleMap;
+    public static GoogleMap mGoogleMap;
 
     double currentlat, currentlon;
     LatLng currentloc;
@@ -49,8 +48,14 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, SplashActivity.class));
         setContentView(R.layout.activity_main);
+
+        // 로딩화면이 빨리 사라지는것을 방지
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         evtcnt.add(0,0);    // 이벤트 등록 여부
 
@@ -180,8 +185,7 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
     public void init() {
         GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
-        mGoogleMap = ((SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map)).getMap();
+        mGoogleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
         GpsInfo gps = new GpsInfo(this);
 
@@ -202,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements CommonData, Senso
             MarkerOptions optFirst = new MarkerOptions();
             optFirst.position(currentloc);// 위도 • 경도
             optFirst.title("Current Position");// 제목 미리보기
-            optFirst.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)); // 아이콘
+            optFirst.icon(BitmapDescriptorFactory.fromResource(R.mipmap.current_location)); // 아이콘
             mGoogleMap.addMarker(optFirst).showInfoWindow();
         }
     }

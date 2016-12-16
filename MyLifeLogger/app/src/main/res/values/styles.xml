@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name = "SplashPanel" parent = "@android:style/Theme.NoTitleBar.Fullscreen">
+
+        <item name="android:windowBackground">@drawable/loading_v2</item>
+
+    </style>
+
 </resources>

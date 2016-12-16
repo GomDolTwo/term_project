@@ -9,7 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.sql.Date;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.Calendar;
 
 /**
@@ -122,6 +126,7 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
                     min = now.get(Calendar.MINUTE);
                     sec = now.get(Calendar.SECOND);
 
+                    init(year, month, day, hour, min, sec);
                     taskSQLexec(name, year, month, day, hour, min, sec, latitude.get(0), longitude.get(0), start, taskDB);
 
                     evtcnt.add(0,1);
@@ -189,5 +194,17 @@ public class TaskActivity extends AppCompatActivity implements CommonData {
                 }
             }
         });
+    }
+
+    public void init(int y, int m, int d, int h, int mm, int s) {
+        GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+        LatLng currentloc = new LatLng(latitude.get(0), longitude.get(0));
+
+        MarkerOptions optFirst = new MarkerOptions();
+        optFirst.position(currentloc);// 위도 • 경도
+        optFirst.title(name + " / " + y + ". " + m + ". " + d + " " + h + ":" + mm + ":" + s);// 제목 미리보기
+        optFirst.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)); // 아이콘
+        MainActivity.mGoogleMap.addMarker(optFirst).showInfoWindow();
     }
 }

@@ -25,8 +25,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true">
 
         <uses-library android:name="com.google.android.maps" />
 
@@ -34,31 +33,43 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDofbNuNTpNHblcmuf4E1zWjB2NgC_c_70" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashPanel"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".SplashActivity">
 
         </activity>
 
-        <activity android:name=".TaskActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".TaskActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".MokpyoActivity">
+        <activity android:name=".MokpyoActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".StatActivity">
+        <activity android:name=".StatActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity android:name=".ChartActivity"
+            android:theme="@style/AppTheme"
             android:screenOrientation="landscape">
 
         </activity>
